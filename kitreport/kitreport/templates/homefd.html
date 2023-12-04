@@ -1,0 +1,20 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+
+{% block header %}
+<div>
+    {% block header_text %}
+        <div class="header-text">КИТ.ОТЧЕТ</div>
+    {% endblock %}
+    {% block subtext %}
+        <div class="subtext">Выберите необходимый отчет <br> </div>
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block content %}
+  <div class="menu">
+    <a href="/equatingreportupload" class="btn">Эквайринг</a>
+
+  </div>
+{% endblock %}

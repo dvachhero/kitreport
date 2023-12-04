@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход в систему{% endblock %}
+
+{% block header %}
+<div>
+    {% block header_text %}
+        <div class="header-text">КИТ.ОТЧЕТ</div>
+    {% endblock %}
+    {% block subtext %}
+        <div class="subtext">Войдите используя свой логин и пароль <br> </div>
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <!-- Форма авторизации -->
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Войти</button>
+    </form>
+</div>
+{% endblock %}

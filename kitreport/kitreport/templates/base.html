@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}КИТ.ОТЧЕТ{% endblock %}</title>
+    <style>
+        body {
+            background-color: #333333;
+            color: #FFF9CF;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Изменение направления контейнера на вертикальное */
+        }
+        .header img {
+            height: 220px;
+            width: 400px;
+            margin-right: 0px;
+        }
+        .header-text {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center; /* Выравнивание текста по центру */
+        }
+        .subtext {
+            font-size: 1.0em;
+            margin-top: 10px;
+            line-height: 25px;
+            text-align: center;
+            white-space: normal; /* Разрешить перенос текста по словам */
+        }
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .container {
+            text-align: center;
+            max-width: 300px;
+            margin: 15px auto;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        input[type="file"], input[type="submit"], .btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #FFF9CF;
+            color: #333333;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button[type="submit"] {
+            padding: 13px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #FFF9CF;
+            color: #333333;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0,3s;
+        }
+        input[type="submit"]:hover, .btn:hover {
+            background-color: #333333;
+            color: #FFF9CF;
+        }
+        .instruction-btn {
+            font-size: 1.0em;
+            background-color: #333333;
+            color: #FFF9CF
+        }
+        .instruction-btn:hover {
+            background-color: #FFF9CF;
+            color: #333333;
+        }
+        button {
+             padding: 10px 20px;
+             font-size: 1em;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             background-color: #FFF9CF;
+             color: #333333;
+             display: block;
+             width: 100%;
+             box-sizing: border-box;
+             margin-bottom: 20px;
+             text-align: center;
+             text-decoration: none;
+             transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+             background-color: #333333;
+             color: #FFF9CF;
+        }
+
+        input[type="text"], input[type="password"] {
+             background-color: #333333;
+             color: #FFF9CF;
+             padding: 10px;
+             border: none;
+             border-radius: 5px;
+             margin-bottom: 10px;
+             width: 50%;
+        }
+
+        .img-container img {
+              max-width: 100%; /* Максимальная ширина контейнера */
+              height: auto; /* Автоматическая высота для сохранения пропорций изображения */
+              cursor: pointer; /* Изменение курсора при наведении для показа, что изображение кликабельно */
+              transition: transform 0.2s; /* Плавное анимированное увеличение при наведении */
+              border-radius: 10px;
+              border: 2px solid #FFF9CF;
+        }
+
+        .img-container:hover img:hover {
+              transform: scale(1.5); /* Увеличение в 1.2 раза при наведении */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="{% block logo %}https://i.ibb.co/FXFR9nZ/image.png{% endblock %}" alt="logo">
+        </div>
+        <div>
+            {% block header %}
+            <div>{% block header-text %}KIT.ОТЧЕТ{% endblock %}</div>
+            <div>{% block subtext %}ЗАГРУЗИТЕ ФАЙЛЫ{% endblock %}</div>
+            {% endblock %}
+        </div>
+</div>
+    </div>
+
+    <div class="container">
+        {% block content %}
+        <!-- Содержимое будет переопределено в дочерних шаблонах -->
+        {% endblock %}
+    </div>
+
+    <!-- Здесь можно добавить общие скрипты -->
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
