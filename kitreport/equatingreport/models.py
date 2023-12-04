@@ -13,51 +13,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-class InventoryReport500Handbook(models.Model):
-    BE = models.CharField(max_length=255)
-    Financial = models.CharField(max_length=255)
-    DocumentNumber = models.CharField(max_length=255)
-    MainS = models.CharField(max_length=255)
-    ValueIn = models.CharField(max_length=255)
-    CurrencyBE = models.CharField(max_length=255)
-    DateProcessed = models.DateField()
-    Processed = models.BooleanField()
-
-    def __str__(self):
-        return self.DocumentNumber
-
-class InventoryReport500(models.Model):
-    BE = models.CharField(max_length=255)
-    Financial = models.CharField(max_length=255)
-    DocumentNumber = models.CharField(max_length=255)
-    MainS = models.CharField(max_length=255)
-    ValueIn = models.CharField(max_length=255)
-    CurrencyBE = models.CharField(max_length=255)
-    DateProcessed = models.DateField()
-    Processed = models.BooleanField(default=False)
-
-class InventoryReport555(models.Model):
-    BE = models.CharField(max_length=255)
-    Financial = models.CharField(max_length=255)
-    DocumentNumber = models.CharField(max_length=255)
-    MainS = models.CharField(max_length=255)
-    ValueIn = models.CharField(max_length=255)
-    CurrencyBE = models.CharField(max_length=255)
-    DateProcessed = models.DateField()
-    Processed = models.BooleanField(default=False)
-
-class InventoryReport555Handbook(models.Model):
-    BE = models.CharField(max_length=255)
-    Financial = models.CharField(max_length=255)
-    DocumentNumber = models.CharField(max_length=255)
-    MainS = models.CharField(max_length=255)
-    ValueIn = models.CharField(max_length=255)
-    CurrencyBE = models.CharField(max_length=255)
-    DateProcessed = models.DateField()
-    Processed = models.BooleanField()
-
-    def __str__(self):
-        return self.DocumentNumber
 
 #@receiver(post_save, sender=User)
 #def create_user_profile(sender, instance, created, **kwargs):
