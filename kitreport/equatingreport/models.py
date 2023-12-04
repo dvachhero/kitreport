@@ -13,23 +13,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-class Eqvar(models.Model):
-    terminal = models.CharField(max_length=255, blank=True, null=True)
-    dateprov = models.CharField(max_length=255, blank=True, null=True)
-    sumoper = models.CharField(max_length=255, blank=True, null=True)
 
-class Eqvarkrym(models.Model):
-    POS = models.CharField(max_length=255, blank=True, null=True)
-    TransactionDate = models.CharField(max_length=255, blank=True, null=True)
-    TransactionAmount = models.CharField(max_length=255, blank=True, null=True)
-
-class EqvarSap(models.Model):
-    SerialNumberFN = models.CharField(max_length=255, blank=True, null=True)
-    Date = models.CharField(max_length=255, blank=True, null=True)
-    Sum = models.CharField(max_length=255, blank=True, null=True)
-    CreatedBy = models.CharField(max_length=255, blank=True, null=True)
-    Driver = models.CharField(max_length=255, blank=True, null=True)
-    PaymentType = models.CharField(max_length=255, blank=True, null=True)
 
 
 
