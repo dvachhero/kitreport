@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'kitreport.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'storage_game',
+        'NAME': 'kitreport',
         'USER': 'zybinsk',
         'PASSWORD': 's7e17D*s7e17D*',
         'HOST': '89.223.64.243',
