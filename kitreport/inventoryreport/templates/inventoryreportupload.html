@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Загрузка отчетов{% endblock %}
+
+{% block header %}
+<div>
+    {% block header_text %}
+        <div class="header-text">КИТ.ОТЧЕТ: <br> Инвентаризация</div>
+    {% endblock %}
+    {% block subtext %}
+        <div class="subtext">1. Запустите отчет SAP R/3 "FBL3H" <br> 2. Выберите необходимый формат <br> и сохраните отчет на свой компьютер <br> 3. Загрузите отчет по кнопке <br> "Обзор" со своего компьютера <br> 4. Нажмите кнопку "Загрузить"  </div>
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="inventory-report-upload">
+    <a href="/homefd" class="btn">Вернуться в меню</a>
+    <!-- Кнопка инструкции добавлена здесь -->
+    <a href="https://portal.tk-kit.net/knowledge/kit.report/instructionsFD/Instructions_inventory_of_DS/" class="btn instruction-btn">Подробная инструкция</a>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="file-upload">
+            <label for="file1">Отчет SAP 500:</label>
+            <p></p>
+            <input type="file" name="inventory500" id="file1" accept=".csv, .xlsx, .xls" required>
+        </div>
+        <div class="file-upload">
+            <label for="file2">Отчет SAP 555:</label>
+            <p></p>
+            <input type="file" name="inventory555" id="file2" accept=".csv, .xlsx, .xls" required>
+        </div>
+        <button type="submit" class="btn">Загрузить</button>
+    </form>
+</div>
+{% endblock %}
