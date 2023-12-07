@@ -5,5 +5,3 @@ db_config = {
     'PORT': '3306',
     'DATABASE': 'kitreport'
 }
-
-table_500 = ""
