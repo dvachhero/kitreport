@@ -1,0 +1,11 @@
+<!-- templates/error.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="error-message">
+    <h2>Произошла ошибка при обработке файлов:</h2>
+    <p>{{ error }}</p>
+    <a href="{% url 'upload_files' %}">Попробовать снова</a>
+</div>
+{% endblock %}

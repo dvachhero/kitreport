@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Загрузка отчетов{% endblock %}
+
+{% block header %}
+<div>
+    {% block header_text %}
+        <div class="header-text">КИТ.ОТЧЕТ: Эквайринг</div>
+    {% endblock %}
+    {% block subtext %}
+        <div class="subtext">1. Запустите отчет SAP HANA "ZDT_CRCDATAH_ALL" <br> 2. Выберите необходимый формат <br> и сохраните отчет на свой компьютер <br> 3. Загрузите отчет SAP HANA и данные по <br> Эквайрингам по кнопке "Обзор" со своего компьютера <br> 4. Нажмите кнопку "Загрузить" <br> </div>
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="equating-report-upload">
+    <a href="/homefd" class="btn">Вернуться в меню</a>
+    <!-- Кнопка инструкции добавлена здесь -->
+    <a href="https://portal.tk-kit.net/knowledge/kit.report/instructionsFD/Instructions_checking_acquiring/" class="btn instruction-btn">Подробная инструкция</a>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Загрузить</button>
+    </form>
+</div>
+{% endblock %}
