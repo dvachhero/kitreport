@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 import logging
 from django.contrib import messages
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from .models import InventoryReportHandbook, InventoryReportError, ForReport
 from .forms import UploadFileForm
@@ -13,7 +13,7 @@ import pandas as pd
 from datetime import datetime
 import os
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('inventoryreport')
 
 def login_view(request):
     if request.method == 'POST':
@@ -64,9 +64,9 @@ def save_errors_to_csv(df_errors):
     filepath = os.path.join(procedure_dir, filename)
     try:
         df_errors.to_csv(filepath, index=False, encoding='utf-16')
-        logger.info(f"Ошибки были сохранены по пути: {filepath}")
+        logger.info(f"INFO Новые ошибки сохранены, путь:\n{filepath}")
     except Exception as err:
-        logger.error(f"Ошибка при сохранении файла: {err}")
+        logger.error(f"ERROR Ошибка при сохранении файла: {err}")
     return filepath
 
 # Функция для проверки 500.csv
@@ -160,37 +160,17 @@ def archive_and_clear_existing_errors():
 
         # Очистка существующих записей в модели
         existing_errors.delete()
-        logger.info(f"Существующие ошибки сохранены в {old_filepath} и очищены из базы данных.")
+        logger.info(f"INFO Старые ошибки сохранены, путь:\n{old_filepath}")
 
 # Функция для записи ошибок в таблицу
 def save_errors_to_db(errors):
     for error in errors:
         try:
             new_error = InventoryReportError.objects.create(**error)
-            logger.info(f"Добавлена ошибка: {new_error}")
-        except Exception as e:
-            logger.error(f"Ошибка при добавлении записи в базу данных: {e}")
+            logger.info(f"INFO Добавлена ошибка: {new_error}")
+        except Exception as err:
+            logger.error(f"ERROR Ошибка при добавлении записи в базу данных: {err}")
 
-# Функция для выполнения основного процесса
-def main_process(file_500_path, file_555_path, file_z0660_path):
-    try:
-        archive_and_clear_existing_errors()
-        
-        missing_cities_500 = compare_with_500_csv(file_500_path)
-        missing_cities_acc_555 = compare_with_555_csv(file_555_path)
-        missing_cities_555 = filter_cities_with_z0660(missing_cities_acc_555, file_z0660_path)
-
-        combined_missing_cities = missing_cities_500.union(missing_cities_555)
-        df_errors = compare_with_for_report(combined_missing_cities)
-        
-        if not df_errors.empty:
-            csv_filepath = save_errors_to_csv(df_errors)
-            save_errors_to_db(df_errors.to_dict('records'))
-            logger.info(f"Добавлено {len(df_errors)} новых ошибок в базу данных и сохранено в {csv_filepath}.")
-            
-    except Exception as err:
-        logger.error(f'Ошибка при обработке файлов: {err}')
-        raise
 
 # Функция для очистки папки media
 def clear_media_folder():
@@ -203,8 +183,8 @@ def clear_media_folder():
             try:
                 if os.path.isfile(file_path):
                     os.remove(file_path)
-            except Exception as e:
-                print(f'Не удалось удалить {file_path}. Причина: {e}')
+            except Exception as err:
+                logger.error(f'ERROR Не удалось удалить {file_path}. Причина: {err}')
 
 # Функция для загрузки файлов на сервер
 def handle_uploaded_file(f, file_name, clear_folder=False):
@@ -220,10 +200,51 @@ def handle_uploaded_file(f, file_name, clear_folder=False):
         for chunk in f.chunks():
             destination.write(chunk)
     return file_path
-    
+
+@login_required(login_url='/login/')
+def upload_success(request):
+    download_path_exists = 'download_path' in request.session and request.session['download_path']
+    return render(request, 'upload_success.html', {'download_url': download_path_exists})
+
+@login_required(login_url='/login/')
+def download_file(request):
+    file_path = request.session.get('download_path')
+    if file_path and os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
+
+# Функция для выполнения основного процесса
+def main_process(file_500_path, file_555_path, file_z0660_path, request):
+    try:
+        archive_and_clear_existing_errors()
+        
+        missing_cities_500 = compare_with_500_csv(file_500_path)
+        missing_cities_acc_555 = compare_with_555_csv(file_555_path)
+        missing_cities_555 = filter_cities_with_z0660(missing_cities_acc_555, file_z0660_path)
+
+        combined_missing_cities = missing_cities_500.union(missing_cities_555)
+        df_errors = compare_with_for_report(combined_missing_cities)
+        
+        if not df_errors.empty:
+            csv_filepath = save_errors_to_csv(df_errors)
+            save_errors_to_db(df_errors.to_dict('records'))
+            request.session['download_path'] = csv_filepath
+            return True
+        return False
+            
+    except Exception as err:
+        logger.error(f'ERROR Ошибка при обработке файлов: {err}')
+        raise
+  
 # Функция для загрузки файлов
 @login_required(login_url='/login/')
 def inventory_report_upload(request):
+    
+    logger.info("==========================================================================================")
+    
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -237,14 +258,17 @@ def inventory_report_upload(request):
             file_z0660_path = handle_uploaded_file(file_z0660, file_z0660.name)
 
             try:
-                main_process(file_500_path, file_555_path, file_z0660_path)
-                messages.success(request, 'Файлы успешно обработаны.')
-            except Exception as e:
-                messages.error(request, f'Ошибка при обработке файлов: {e}')
+                success = main_process(file_500_path, file_555_path, file_z0660_path, request)
+                if success:
+                    return redirect('upload_success')
+                else:
+                    messages.error(request, 'Не удалось перенаправить на upload_success.html')
+            except Exception as err:
+                messages.error(request, f'Ошибка при обработке файлов: {err}')
         else:
             messages.error(request, 'Ошибка в форме загрузки.')
 
     else:
         form = UploadFileForm()
-
+    
     return render(request, 'inventoryreportupload.html', {'form': form})

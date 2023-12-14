@@ -83,18 +83,31 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'file': {
+        'file_inventory': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'inventoryreport.log'),
+            'filename': os.path.join(LOGS_DIR, 'inventoryreport.log'),
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
+            'encoding': 'utf-8',
+        },
+        'file_equating': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'equatingreport.log'),
             'maxBytes': 1024*1024*5,  # 5 MB
             'backupCount': 5,
             'encoding': 'utf-8',
         },
     },
     'loggers': {
-        '': {
-            'handlers': ['file'],
+        'inventoryreport': {
+            'handlers': ['file_inventory'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'equatingreport': {
+            'handlers': ['file_equating'],
             'level': 'INFO',
             'propagate': True,
         },
