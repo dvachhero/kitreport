@@ -16,7 +16,9 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'inventoryreport', 'media')
+MEDIA_ROOT_IYR = os.path.join(BASE_DIR, 'inventoryreport', 'media')
+MEDIA_ROOT_ISR = os.path.join(BASE_DIR, 'inventoryreport', 'media')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -99,6 +101,14 @@ LOGGING = {
             'backupCount': 5,
             'encoding': 'utf-8',
         },
+        'file_encassation': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'equatingreport.log'),
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
+            'encoding': 'utf-8',
+        },
     },
     'loggers': {
         'inventoryreport': {
@@ -108,6 +118,11 @@ LOGGING = {
         },
         'equatingreport': {
             'handlers': ['file_equating'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'encassationreport': {
+            'handlers': ['file_encassation'],
             'level': 'INFO',
             'propagate': True,
         },

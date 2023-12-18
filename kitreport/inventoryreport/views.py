@@ -54,7 +54,7 @@ def normalize_city_name(city):
 
 # Функция для записи ошибок в csv
 def save_errors_to_csv(df_errors):
-    procedure_dir = os.path.join(settings.MEDIA_ROOT, 'procedure')
+    procedure_dir = os.path.join(settings.MEDIA_ROOT_IYR, 'procedure')
     if not os.path.exists(procedure_dir):
         os.makedirs(procedure_dir)
     filename = "[{}][{}]_inventoryreport.csv".format(
@@ -146,7 +146,7 @@ def archive_and_clear_existing_errors():
         df_existing_errors = pd.DataFrame.from_records(existing_errors.values())
 
         # Проверка и создание папки, если не существует
-        old_procedure_dir = os.path.join(settings.MEDIA_ROOT, 'procedure.old')
+        old_procedure_dir = os.path.join(settings.MEDIA_ROOT_IYR, 'procedure.old')
         if not os.path.exists(old_procedure_dir):
             os.makedirs(old_procedure_dir)
 
@@ -174,7 +174,7 @@ def save_errors_to_db(errors):
 
 # Функция для очистки папки media
 def clear_media_folder():
-    media_root = settings.MEDIA_ROOT
+    media_root = settings.MEDIA_ROOT_IYR
     if not os.path.exists(media_root):
         os.makedirs(media_root)
     else:
@@ -188,7 +188,7 @@ def clear_media_folder():
 
 # Функция для загрузки файлов на сервер
 def handle_uploaded_file(f, file_name, clear_folder=False):
-    media_root = settings.MEDIA_ROOT
+    media_root = settings.MEDIA_ROOT_IYR
     if not os.path.exists(media_root):
         os.makedirs(media_root)
 
