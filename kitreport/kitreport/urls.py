@@ -7,7 +7,6 @@ from equatingreport.views import upload_files, check_fn
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homefd, name='homefd'),
@@ -15,9 +14,8 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('homefd/', homefd, name='homefd'),
     path('inventoryreportupload/', inventory_report_upload, name='inventory_report_upload'),
-    path('check_fn/', check_fn, name='check_fn'),
-    path('inventoryreportupload/', inventory_report_upload, name='inventory_report_upload'),
     path('inventoryreportupload/success/', upload_success, name='upload_success'),
     path('inventoryreportupload/success/download-file/', download_file, name='download_file'),
-
+    path('check_fn/', check_fn, name='check_fn'),
+  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

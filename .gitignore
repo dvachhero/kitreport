@@ -64,7 +64,6 @@ Z0660_HKONT_VED.csv
 kitreport/inventoryreport/migrations/*
 kitreport/equatingreport/migrations/*
 kitreport/encassationreport/migrations/*
-
 *.xls
 *.xlsx
 *.odf
