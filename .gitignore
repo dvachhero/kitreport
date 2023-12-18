@@ -51,6 +51,12 @@ $RECYCLE.BIN/
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
-/other/*
-procedure/*
-procedure.old/*
+__pycache__/
+kitreport/logs/*
+kitreport/inventoryreport/media/procedure/*
+kitreport/inventoryreport/media/procedure.old/*
+500.csv
+555.csv
+Z0660_HKONT_VED.csv
+/kitreport-backup/
+/kitreport-for-tests/

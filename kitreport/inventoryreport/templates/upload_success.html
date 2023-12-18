@@ -1,0 +1,14 @@
+<!-- upload_success.html -->
+{% extends "base.html" %}
+
+{% block title %}Инвентаризация{% endblock %}
+
+{% block content %}
+<div class="success-message">
+    <p>Файлы успешно обработаны.</p>
+    {% if download_url %}
+        <a href="{% url 'download_file' %}" class="btn btn-secondary">Скачать отчёт</a>
+    {% endif %}
+        <a href="{% url 'inventory_report_upload' %}" class="btn btn-secondary">Вернуться назад</a>
+</div>
+{% endblock %}

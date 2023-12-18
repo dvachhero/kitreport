@@ -15,6 +15,9 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+MEDIA_URL = '/media/'
+MEDIA_ROOT_IYR = os.path.join(BASE_DIR, 'inventoryreport', 'media')
+MEDIA_ROOT_ISR = os.path.join(BASE_DIR, 'encassationreport', 'media')
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'equatingreport',
     'encassationreport',
     'inventoryreport',
@@ -73,6 +77,57 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kitreport.wsgi.application'
 
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file_inventory': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'inventoryreport.log'),
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
+            'encoding': 'utf-8',
+        },
+        'file_equating': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'equatingreport.log'),
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
+            'encoding': 'utf-8',
+        },
+        'file_encassation': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'encassationreport.log'),
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
+            'encoding': 'utf-8',
+        },
+    },
+    'loggers': {
+        'inventoryreport': {
+            'handlers': ['file_inventory'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'equatingreport': {
+            'handlers': ['file_equating'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'encassationreport': {
+            'handlers': ['file_encassation'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
