@@ -10,12 +10,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homefd, name='homefd'),
-    path('equatingreportupload/', equating_report_upload, name='equating_report_upload'),
+    path('equatingreportupload/', upload_files, name='equating_report_upload'),
     path('login/', login_view, name='login'),
     path('homefd/', homefd, name='homefd'),
     path('inventoryreportupload/', inventory_report_upload, name='inventory_report_upload'),
     path('inventoryreportupload/success/', upload_success, name='upload_success'),
     path('inventoryreportupload/success/download-file/', download_file, name='download_file'),
     path('check_fn/', check_fn, name='check_fn'),
-
+  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
