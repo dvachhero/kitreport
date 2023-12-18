@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div>
+    {% block header_text %}
+        <div class="header-text">КИТ.ОТЧЕТ</div>
+    {% endblock %}
+    {% block subtext %}
+        <div class="subtext">Выберите необходимый отчет <br> </div>
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Проверить</button>
+        <button onclick="window.location.href='{% url 'equating_report_upload' %}'">Назад</button>
+    </form>
+
+    <!-- Здесь будут отображаться результаты, если они есть -->
+    {% if mismatches_ekv %}
+            <h2>Несоответствия EKV</h2>
+            {{ mismatches_ekv|safe }}
+    {% endif %}
+    {% if mismatches_fn %}
+            <h2>Несоответствия FN</h2>
+            {{ mismatches_fn|safe }}
+        </div>
+    {% endif %}
+
+    <!-- Если есть ошибка, отображаем её здесь -->
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

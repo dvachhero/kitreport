@@ -5,7 +5,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     department = models.CharField(max_length=100, default='Default Department')
     full_name = models.CharField(max_length=255, default='Default FIO')
-
     @property
     def username(self):
         return self.user.username
@@ -15,7 +14,7 @@ class UserProfile(models.Model):
 
 class sprforekv(models.Model):
     TID = models.CharField(max_length=255)  # Автоинкрементируемое поле для идентификатора
-    name_rp = models.CharField(max_length=255)  # CharField для name_rp
+    name_rp = models.TextField()  # CharField для name_rp
     pfm = models.CharField(max_length=255)  # CharField для pfm
     street = models.CharField(max_length=255)  # CharField для street
     comment = models.TextField()  # TextField для comment, если текст может быть длинным
@@ -25,6 +24,13 @@ class sprforekv(models.Model):
     def __str__(self):
         return self.name_rp  # Метод для отображения name_rp в административной панели
 
+class sprforfn(models.Model):
+    code_fn = models.TextField(verbose_name="code_fn")
+    name_rp = models.TextField(verbose_name="name_rp")
+    pfm = models.TextField(verbose_name="pfm")
+
+    def __str__(self):
+        return self.code_fn
 
 
 class EkviringData(models.Model):
@@ -35,9 +41,25 @@ class EkviringData(models.Model):
     def __str__(self):
         return f"{self.date_operation} {self.terminal} {self.sum_operation}"
 
+class EkviringData_enriched(models.Model):
+    date_operation = models.DateField(verbose_name="ДАТАОПЕРАЦИИ")
+    terminal = models.BigIntegerField(verbose_name="ТЕРМИНАЛ")
+    sum_operation = models.IntegerField(verbose_name="СУММАОПЕРАЦИИ")
+    TID = models.CharField(max_length=255, verbose_name="TID")
+    name_rp = models.TextField(verbose_name="name_rp")
+    pfm = models.TextField(verbose_name="pfm")
+    fio_rp = models.TextField(verbose_name="fio_rp")
+    id_rp = models.TextField(verbose_name="id_rp")
+    id_x = models.TextField(verbose_name="id_x")
+    id_y = models.TextField(verbose_name="id_y")
+    street = models.TextField(verbose_name="street")
+    comment = models.TextField(verbose_name="comment")
+    def __str__(self):
+        return self.TID
+
 
 class PaymentData(models.Model):
-    serial_number = models.CharField(max_length=100, verbose_name="Серийный №ФН")
+    code_fn = models.CharField(max_length=100, verbose_name="Серийный №ФН")
     date = models.CharField(max_length=100, verbose_name="Дата")
     sum = models.IntegerField(verbose_name="Сумма ВВ")
     created_by = models.CharField(max_length=100, verbose_name="Создал")
@@ -46,6 +68,23 @@ class PaymentData(models.Model):
 
     def __str__(self):
         return f"{self.serial_number} {self.date} {self.sum}"
+
+class PaymentData_enriched(models.Model):
+    code_fn = models.TextField(verbose_name="СЕРИЙНЫЙ№ФН")
+    date = models.DateField(verbose_name="ДАТА")
+    sum = models.IntegerField(verbose_name="СУММАВВ")
+    created_by = models.TextField(verbose_name="СОЗДАЛ")
+    driver = models.TextField(verbose_name="ВОДИТЕЛЬ")
+    payment_type = models.TextField(verbose_name="НАИМТИПЗАКР(ПЛ)")
+    code_fn = models.TextField(verbose_name="code_fn")
+    pfm = models.TextField(verbose_name="pfm")
+    id_x = models.TextField(verbose_name="id_x")
+    id_y = models.TextField(verbose_name="id_y")
+    name_rp = models.TextField(verbose_name="name_rp")
+    def __str__(self):
+        return self.serial_number_fn
+
+
 
 
 

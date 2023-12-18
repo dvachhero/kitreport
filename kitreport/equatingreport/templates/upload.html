@@ -22,6 +22,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Загрузить</button>
+        <button onclick="window.location.href='{% url 'check_fn' %}'">Проверить ФН и Терминал</button>
     </form>
 </div>
 {% endblock %}

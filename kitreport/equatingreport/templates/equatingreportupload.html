@@ -20,22 +20,9 @@
     <a href="https://portal.tk-kit.net/knowledge/kit.report/instructionsFD/Instructions_checking_acquiring/" class="btn instruction-btn">Подробная инструкция</a>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="file-upload">
-            <label for="file1">Отчет SAP:</label>
-            <p></p>
-            <input type="file" name="ekv_sap" id="file1" accept=".csv, .xlsx, .xls" required>
-        </div>
-        <div class="file-upload">
-            <label for="file2">Отчет Экваринг:</label>
-            <p></p>
-            <input type="file" name="ekv" id="file2" accept=".csv, .xlsx, .xls" required>
-        </div>
-        <div class="file-upload">
-            <label for="file3">Отчет Экваринг Крым:</label>
-            <p></p>
-            <input type="file" name="ekv_krym" id="file3" accept=".csv, .xlsx, .xls" required>
-        </div>
-        <button type="submit" class="btn">Загрузить</button>
+        {{ form.as_p }}
+        <button type="submit">Загрузить</button>
+        <button onclick="window.location.href='{% url 'check_fn' %}'">Проверить ФН и Терминал</button>
     </form>
 </div>
 {% endblock %}
