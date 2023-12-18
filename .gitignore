@@ -61,7 +61,9 @@ Z0660_HKONT_VED.csv
 /kitreport-backup/
 /kitreport-for-tests/
 
-*/migrations/
+kitreport/inventoryreport/migrations/*
+kitreport/equatingreport/migrations/*
+kitreport/encassationreport/migrations/*
 
 *.xls
 *.xlsx
