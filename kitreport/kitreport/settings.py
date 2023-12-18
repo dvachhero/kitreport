@@ -17,7 +17,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT_IYR = os.path.join(BASE_DIR, 'inventoryreport', 'media')
-MEDIA_ROOT_ISR = os.path.join(BASE_DIR, 'inventoryreport', 'media')
+MEDIA_ROOT_ISR = os.path.join(BASE_DIR, 'encassationreport', 'media')
 
 
 # Quick-start development settings - unsuitable for production
