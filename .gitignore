@@ -60,3 +60,9 @@ kitreport/inventoryreport/media/procedure.old/*
 Z0660_HKONT_VED.csv
 /kitreport-backup/
 /kitreport-for-tests/
+kitreport/inventoryreport/migrations/*
+kitreport/equatingreport/migrations/*
+kitreport/encassationreport/migrations/*
+*.xls
+*.xlsx
+*.odf
