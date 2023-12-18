@@ -241,7 +241,7 @@ def check_fn(request):
                 # Объединяем и находим несоответствия
                 combined_ekv = pd.concat([df_ekv, df_ekv_krym], ignore_index=True)
                 print(combined_ekv)
-                combined_ekv.to_excel('combined_ekv.xlsx', index=False)
+
 
                 # Объединяем столбцы из df_ekv и df_ekv_krym в один столбец
                 combined_ekv_column = pd.concat([df_ekv[df_ekv.columns[0]], df_ekv_krym[df_ekv_krym.columns[0]]],ignore_index=True)
@@ -250,7 +250,7 @@ def check_fn(request):
                 combined_ekv = pd.DataFrame(combined_ekv_column)
                 combined_ekv.columns = ['Combined_EKV']  # Назначаем имя столбца
                 print(combined_ekv)
-                combined_ekv.to_excel('combined_ekv.xlsx', index=False)
+
 
                 mismatches_ekv = pd.merge(combined_ekv, sprforekv_data, left_on='Combined_EKV', right_on='TID', how='left', indicator=True)
                 mismatches_ekv = mismatches_ekv[mismatches_ekv['_merge'] == 'left_only']
