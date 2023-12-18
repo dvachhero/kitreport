@@ -272,3 +272,4 @@ def check_fn(request):
     # Возвращаем ответ для всех запросов, включая GET
     return render(request, 'check_fn.html', context)
 
+
