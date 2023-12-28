@@ -32,13 +32,7 @@ def logout_view(request):
     return redirect('/login/')
 
 @login_required(login_url='/login/')
-def inventory_report_upload(request):
-    # Ваша логика обработки запроса, если необходимо
-    return render(request, 'inventoryreportupload.html')
-
-@login_required(login_url='/login/')
 def homefd(request):
-    # Логика для страницы home
     return render(request, 'homefd.html')
 
 # Функция для очистки CSV файла
@@ -202,12 +196,12 @@ def handle_uploaded_file(f, file_name, clear_folder=False):
     return file_path
 
 @login_required(login_url='/login/')
-def upload_success(request):
+def inventory_upload_success(request):
     download_path_exists = 'download_path' in request.session and request.session['download_path']
-    return render(request, 'upload_success.html', {'download_url': download_path_exists})
+    return render(request, 'inventory_upload_success.html', {'download_url': download_path_exists})
 
 @login_required(login_url='/login/')
-def download_file(request):
+def inventory_download_file(request):
     file_path = request.session.get('download_path')
     if file_path and os.path.exists(file_path):
         with open(file_path, 'rb') as fh:
@@ -260,7 +254,7 @@ def inventory_report_upload(request):
             try:
                 success = main_process(file_500_path, file_555_path, file_z0660_path, request)
                 if success:
-                    return redirect('upload_success')
+                    return redirect('inventory_upload_success')
                 else:
                     messages.error(request, 'Не удалось перенаправить на upload_success.html')
             except Exception as err:

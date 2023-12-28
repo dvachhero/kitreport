@@ -1,22 +1,23 @@
-<!-- inventoryreportupload.html -->
+<!-- encassationreportupload.html -->
 {% extends "base.html" %}
 
-{% block title %}Инвентаризация{% endblock %}
+{% block title %}Инкассация{% endblock %}
 
 {% block header %}
 <div>
     {% block header_text %}
-        <div class="header-text">КИТ.ОТЧЕТ: <br> Инвентаризация</div>
+        <div class="header-text">КИТ.ОТЧЕТ: <br> Инкассация</div>
     {% endblock %}
     {% block subtext %}
-        <div class="subtext">1. Запустите отчеты SAP R/3 "FBL3H" <br> и SAP HANA "Z0660_HKONT_VED" <br> 2. Выберите необходимый формат <br> и сохраните отчет на свой компьютер <br> 3. Загрузите отчет по кнопке <br> "Обзор" со своего компьютера <br> 4. Нажмите кнопку "Загрузить"  </div>
+        <div class="subtext">1. Запустите отчет <br> SAP HANA "Z0660_HKONT_VED" <br> 2. Выберите необходимый формат <br> и сохраните отчет на свой компьютер <br> 3. Загрузите отчет по кнопке <br> "Обзор" со своего компьютера <br> 4. Нажмите кнопку "Загрузить"  </div>
     {% endblock %}
 </div>
+
 {% endblock %}
 
 {% block content %}
 
-<div class="inventory-report-upload">
+<div class="encassation-report-upload">
 
     <a href="/homefd" class="btn">Вернуться в меню</a>
     <!-- Кнопка инструкции добавлена здесь -->
@@ -32,16 +33,12 @@
     
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="file-upload">
-            <label for="file500">Отчет SAP 500:</label>
-            <p></p>
-            <input type="file" name="file_500" id="file500" accept=".csv, .xlsx, .xls" required>
+
+        <div class="date-picker">
+            <label for="dateInput">Дата инкассации:</label>
+            <input type="date" id="dateInput" name="date_input" required>
         </div>
-        <div class="file-upload">
-            <label for="file555">Отчет SAP 555:</label>
-            <p></p>
-            <input type="file" name="file_555" id="file555" accept=".csv, .xlsx, .xls" required>
-        </div>
+
         <div class="file-upload">
             <label for="filez0660">Отчет Z0660_HKONT_VED:</label>
             <p></p>

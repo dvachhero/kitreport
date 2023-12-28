@@ -53,17 +53,27 @@ $RECYCLE.BIN/
 
 __pycache__/
 kitreport/logs/*
-kitreport/inventoryreport/media/procedure/*
-kitreport/inventoryreport/media/procedure.old/*
-500.csv
-555.csv
-Z0660_HKONT_VED.csv
+
+# INVENTORY REPORT
+kitreport/inventoryreport/media/*
+
+# ENCASSATION REPORT
+kitreport/encassationreport/media/*
+
+# OTHER
 /kitreport-backup/
 /kitreport-for-tests/
 
+# MIGRATIONS
 kitreport/inventoryreport/migrations/*
 kitreport/equatingreport/migrations/*
 kitreport/encassationreport/migrations/*
+kitreport/handbooks/migrations/*
+kitreport/kitreport/migrations/*
+
+# SCRIPTS
+kitreport/kitreport/scripts/for_report.py
+
 *.xls
 *.xlsx
 *.odf
